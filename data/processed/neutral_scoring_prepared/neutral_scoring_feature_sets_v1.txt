@@ -1,0 +1,87 @@
+Neutral scoring feature sets v1
+===============================
+
+Excluded from primary model:
+- validation_label
+- is_pathogenic_dataset9
+- is_disease_suspected_dataset3
+- variant_id
+- position
+- reference
+- alternate
+- substitution_type
+- gene
+- consequence
+- exact coordinate features
+
+mlc_only
+--------
+mlc_score
+
+population_only
+---------------
+gnomad_observed
+helix_observed
+observed_in_any_population_db
+observed_in_both_population_dbs
+gnomad_homoplasmic_af
+gnomad_heteroplasmic_af
+gnomad_combined_af_simple
+helix_af_hom
+helix_af_het
+pop_af_hom_max
+pop_af_het_max
+pop_af_max
+pop_af_hom_sum
+pop_af_het_sum
+pop_af_sum
+log10_gnomad_homoplasmic_af
+log10_gnomad_heteroplasmic_af
+log10_gnomad_combined_af_simple
+log10_helix_af_hom
+log10_helix_af_het
+log10_pop_af_hom_max
+log10_pop_af_het_max
+log10_pop_af_max
+log10_pop_af_hom_sum
+log10_pop_af_het_sum
+log10_pop_af_sum
+gnomad_max_heteroplasmy
+helix_mean_arf
+helix_max_arf
+pop_max_heteroplasmy_or_arf
+
+combined_mlc_population
+-----------------------
+mlc_score
+gnomad_observed
+helix_observed
+observed_in_any_population_db
+observed_in_both_population_dbs
+gnomad_homoplasmic_af
+gnomad_heteroplasmic_af
+gnomad_combined_af_simple
+helix_af_hom
+helix_af_het
+pop_af_hom_max
+pop_af_het_max
+pop_af_max
+pop_af_hom_sum
+pop_af_het_sum
+pop_af_sum
+log10_gnomad_homoplasmic_af
+log10_gnomad_heteroplasmic_af
+log10_gnomad_combined_af_simple
+log10_helix_af_hom
+log10_helix_af_het
+log10_pop_af_hom_max
+log10_pop_af_het_max
+log10_pop_af_max
+log10_pop_af_hom_sum
+log10_pop_af_het_sum
+log10_pop_af_sum
+gnomad_max_heteroplasmy
+helix_mean_arf
+helix_max_arf
+pop_max_heteroplasmy_or_arf
+
