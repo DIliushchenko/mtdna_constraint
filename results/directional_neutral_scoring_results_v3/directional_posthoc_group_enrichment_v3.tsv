@@ -1,0 +1,13 @@
+score_name	threshold_name	analysis_group	n_group	n_above_threshold	fraction_above_threshold	expected_neutral_fraction	fold_enrichment_vs_neutral_expectation
+directional_score_v3	T90	neutral_reference	8284	829	0.10007242877836794	0.1	1.0007242877836793
+directional_score_v3	T90	unlabeled_or_other	41280	24740	0.5993217054263565	0.1	5.993217054263565
+directional_score_v3	T90	article_pathogenic_posthoc	84	61	0.7261904761904762	0.1	7.261904761904761
+directional_score_v3	T90	disease_suspected_posthoc	56	25	0.44642857142857145	0.1	4.464285714285714
+directional_score_v3	T95	neutral_reference	8284	415	0.05009657170449058	0.05	1.0019314340898116
+directional_score_v3	T95	unlabeled_or_other	41280	17847	0.43234011627906976	0.05	8.646802325581394
+directional_score_v3	T95	article_pathogenic_posthoc	84	36	0.42857142857142855	0.05	8.571428571428571
+directional_score_v3	T95	disease_suspected_posthoc	56	17	0.30357142857142855	0.05	6.07142857142857
+directional_score_v3	T99	neutral_reference	8284	83	0.010019314340898117	0.01	1.0019314340898116
+directional_score_v3	T99	unlabeled_or_other	41280	5489	0.13296996124031008	0.01	13.296996124031008
+directional_score_v3	T99	article_pathogenic_posthoc	84	4	0.047619047619047616	0.01	4.761904761904762
+directional_score_v3	T99	disease_suspected_posthoc	56	2	0.03571428571428571	0.01	3.571428571428571

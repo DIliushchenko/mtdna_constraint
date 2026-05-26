@@ -1,0 +1,10 @@
+score_name	threshold_name	neutral_quantile	threshold_value	n_neutral_above_threshold	fraction_neutral_above_threshold
+directional_mlc_only	T90	0.9	1.6571630661388788	828	0.09995171414775471
+directional_mlc_only	T95	0.95	2.358105469035002	413	0.049855142443264125
+directional_mlc_only	T99	0.99	3.5486257135938137	81	0.009777885079671656
+directional_population_only	T90	0.9	1.3502095654927708	0	0.0
+directional_population_only	T95	0.95	1.3502095654927708	0	0.0
+directional_population_only	T99	0.99	1.3502095654927708	0	0.0
+directional_combined	T90	0.9	1.2361252470798185	829	0.10007242877836794
+directional_combined	T95	0.95	1.3468966850783348	414	0.049975857073877354
+directional_combined	T99	0.99	1.4851528785619017	82	0.009898599710284886

@@ -1,0 +1,4 @@
+score_name	threshold_name	neutral_quantile	threshold_value	n_neutral_above_threshold	fraction_neutral_above_threshold
+directional_score_v3	T90	0.9	1.177818227572866	829	0.10007242877836794
+directional_score_v3	T95	0.95	1.7753690810767087	415	0.05009657170449058
+directional_score_v3	T99	0.99	2.8142945593577946	83	0.010019314340898117
