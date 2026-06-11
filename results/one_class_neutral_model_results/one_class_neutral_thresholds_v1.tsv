@@ -1,0 +1,7 @@
+model_name	score_col	threshold_name	validation_neutral_quantile	threshold_value	n_validation_neutral_above	fraction_validation_neutral_above
+isolation_forest	isolation_forest_outlier_score	T90	0.9	0.07463258548251395	207	0.09995171414775471
+isolation_forest	isolation_forest_outlier_score	T95	0.95	0.1183800728296398	104	0.05021728633510381
+isolation_forest	isolation_forest_outlier_score	T99	0.99	0.16012685525885342	21	0.010140028971511348
+elliptic_envelope	elliptic_envelope_outlier_score	T90	0.9	-81.0095895413946	206	0.09946885562530179
+elliptic_envelope	elliptic_envelope_outlier_score	T95	0.95	-8.425259171058443	104	0.05021728633510381
+elliptic_envelope	elliptic_envelope_outlier_score	T99	0.99	175.7996844979162	21	0.010140028971511348
