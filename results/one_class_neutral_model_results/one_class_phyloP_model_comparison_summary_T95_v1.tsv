@@ -1,0 +1,9 @@
+base_model	feature_set_with_phyloP	threshold_name	mean_delta_fraction_above_threshold	mean_delta_fold_enrichment_vs_expected	n_target_groups_better	n_target_groups_worse	n_target_groups_no_change	overall_interpretation
+elliptic_envelope	codon_mod3_plus_all_phyloP	T95	-0.002976190476190438	-0.05952380952380887	1	1	0	overall_worse_with_phyloP
+elliptic_envelope	codon_mod3_plus_phyloP100way	T95	-0.005952380952380931	-0.11904761904761862	0	1	1	overall_worse_with_phyloP
+elliptic_envelope	codon_mod3_plus_phyloPSSREV30way	T95	-0.011904761904761862	-0.23809523809523725	0	1	1	overall_worse_with_phyloP
+elliptic_envelope	codon_mod3_plus_phyloP30way	T95	-0.10119047619047619	-2.0238095238095237	0	2	0	overall_worse_with_phyloP
+isolation_forest	codon_mod3_plus_phyloP100way	T95	0.21428571428571427	4.285714285714286	2	0	0	overall_better_with_phyloP
+isolation_forest	codon_mod3_plus_all_phyloP	T95	0.19940476190476192	3.988095238095239	2	0	0	overall_better_with_phyloP
+isolation_forest	codon_mod3_plus_phyloP30way	T95	0.09821428571428567	1.9642857142857135	2	0	0	overall_better_with_phyloP
+isolation_forest	codon_mod3_plus_phyloPSSREV30way	T95	0.07738095238095238	1.547619047619048	2	0	0	overall_better_with_phyloP
