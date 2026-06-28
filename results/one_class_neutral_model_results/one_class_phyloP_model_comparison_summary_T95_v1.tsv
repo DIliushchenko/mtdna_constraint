@@ -1,9 +1,9 @@
 base_model	feature_set_with_phyloP	threshold_name	mean_delta_fraction_above_threshold	mean_delta_fold_enrichment_vs_expected	n_target_groups_better	n_target_groups_worse	n_target_groups_no_change	overall_interpretation
-elliptic_envelope	codon_mod3_plus_all_phyloP	T95	-0.002976190476190438	-0.05952380952380887	1	1	0	overall_worse_with_phyloP
-elliptic_envelope	codon_mod3_plus_phyloP100way	T95	-0.005952380952380931	-0.11904761904761862	0	1	1	overall_worse_with_phyloP
-elliptic_envelope	codon_mod3_plus_phyloPSSREV30way	T95	-0.011904761904761862	-0.23809523809523725	0	1	1	overall_worse_with_phyloP
-elliptic_envelope	codon_mod3_plus_phyloP30way	T95	-0.10119047619047619	-2.0238095238095237	0	2	0	overall_worse_with_phyloP
-isolation_forest	codon_mod3_plus_phyloP100way	T95	0.21428571428571427	4.285714285714286	2	0	0	overall_better_with_phyloP
-isolation_forest	codon_mod3_plus_all_phyloP	T95	0.19940476190476192	3.988095238095239	2	0	0	overall_better_with_phyloP
-isolation_forest	codon_mod3_plus_phyloP30way	T95	0.09821428571428567	1.9642857142857135	2	0	0	overall_better_with_phyloP
-isolation_forest	codon_mod3_plus_phyloPSSREV30way	T95	0.07738095238095238	1.547619047619048	2	0	0	overall_better_with_phyloP
+elliptic_envelope	codon_mod3_plus_all_phyloP	T95	0.12499999999999999	2.499999999999999	2	0	0	overall_better_with_phyloP
+elliptic_envelope	codon_mod3_plus_phyloPSSREV30way	T95	0.06250000000000001	1.25	1	1	0	overall_better_with_phyloP
+elliptic_envelope	codon_mod3_plus_phyloP100way	T95	0.05357142857142856	1.0714285714285707	1	1	0	overall_better_with_phyloP
+elliptic_envelope	codon_mod3_plus_phyloP30way	T95	0.05357142857142856	1.0714285714285707	1	1	0	overall_better_with_phyloP
+isolation_forest	codon_mod3_plus_all_phyloP	T95	0.10119047619047622	2.0238095238095246	2	0	0	overall_better_with_phyloP
+isolation_forest	codon_mod3_plus_phyloP100way	T95	0.08333333333333331	1.666666666666667	2	0	0	overall_better_with_phyloP
+isolation_forest	codon_mod3_plus_phyloP30way	T95	0.03273809523809526	0.6547619047619055	2	0	0	overall_better_with_phyloP
+isolation_forest	codon_mod3_plus_phyloPSSREV30way	T95	0.01785714285714285	0.35714285714285765	1	0	1	overall_better_with_phyloP
