@@ -1,9 +1,0 @@
-model_name	threshold_name	analysis_group	n_group	n_above_threshold	fraction_above_threshold	expected_validation_neutral_fraction	fold_enrichment_vs_expected
-isolation_forest	T95	neutral_reference	8284	396	0.04780299372283921	0.05	0.9560598744567841
-isolation_forest	T95	unlabeled_or_other	41280	10637	0.2576792635658915	0.05	5.153585271317829
-isolation_forest	T95	article_pathogenic_posthoc	84	44	0.5238095238095238	0.05	10.476190476190476
-isolation_forest	T95	disease_suspected_posthoc	56	13	0.23214285714285715	0.05	4.642857142857142
-elliptic_envelope	T95	neutral_reference	8284	436	0.05263157894736842	0.05	1.0526315789473684
-elliptic_envelope	T95	unlabeled_or_other	41280	15704	0.3804263565891473	0.05	7.608527131782946
-elliptic_envelope	T95	article_pathogenic_posthoc	84	48	0.5714285714285714	0.05	11.428571428571427
-elliptic_envelope	T95	disease_suspected_posthoc	56	18	0.32142857142857145	0.05	6.428571428571429
