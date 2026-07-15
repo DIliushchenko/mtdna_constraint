@@ -1,0 +1,9 @@
+analysis_group	threshold_status	n_variants	threshold_name	n_group	fraction_within_group
+article_pathogenic_posthoc	above_T95	72	T95	84	0.8571428571428571
+article_pathogenic_posthoc	inside_T95	12	T95	84	0.14285714285714285
+disease_suspected_posthoc	above_T95	24	T95	56	0.42857142857142855
+disease_suspected_posthoc	inside_T95	32	T95	56	0.5714285714285714
+neutral_reference	above_T95	445	T95	8284	0.053718010622887495
+neutral_reference	inside_T95	7839	T95	8284	0.9462819893771125
+unlabeled_or_other	above_T95	27649	T95	41280	0.6697916666666667
+unlabeled_or_other	inside_T95	13631	T95	41280	0.3302083333333333

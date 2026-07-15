@@ -1,0 +1,4 @@
+spectrum_group_primary_preview	n_variants	threshold_name	fraction_total
+unlabeled_out_of_neutral_domain_T90	31552	T90	0.6347980041847738
+expanded_neutral_like_T90	18012	T90	0.3623853211009174
+exclude_posthoc_or_other	140	T90	0.0028166747143087076

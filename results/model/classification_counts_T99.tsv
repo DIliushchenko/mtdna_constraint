@@ -1,0 +1,9 @@
+analysis_group	threshold_status	n_variants	threshold_name	n_group	fraction_within_group
+article_pathogenic_posthoc	above_T99	53	T99	84	0.6309523809523809
+article_pathogenic_posthoc	inside_T99	31	T99	84	0.36904761904761907
+disease_suspected_posthoc	above_T99	14	T99	56	0.25
+disease_suspected_posthoc	inside_T99	42	T99	56	0.75
+neutral_reference	above_T99	74	T99	8284	0.008932882665379043
+neutral_reference	inside_T99	8210	T99	8284	0.9910671173346209
+unlabeled_or_other	above_T99	18267	T99	41280	0.44251453488372094
+unlabeled_or_other	inside_T99	23013	T99	41280	0.557485465116279

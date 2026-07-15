@@ -1,0 +1,4 @@
+spectrum_group_primary_preview	n_variants	threshold_name	fraction_total
+expanded_neutral_like_T99	31297	T99	0.6296676323837116
+unlabeled_out_of_neutral_domain_T99	18267	T99	0.3675156929019797
+exclude_posthoc_or_other	140	T99	0.0028166747143087076
