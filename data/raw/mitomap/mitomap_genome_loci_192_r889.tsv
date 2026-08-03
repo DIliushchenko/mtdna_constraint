@@ -1,0 +1,88 @@
+map_locus	start	end	shorthand	description	reference_count	reference_ids	reference_url
+MT-OHR57	57	57	CR:OH57	H-strand origin	1	4798	https://www.mitomap.org/cgi-bin/print_ref_list?refs=4798&title=mtDNA+Locus+MT-OHR57
+MT-HV2	57	372	CR:HVS2	Hypervariable segment 2 [classic:73-340 ]	3	2,140,3056	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,140,3056&title=mtDNA+Locus+MT-HV2
+MT-OHR	110	441	CR:OH	H-strand origins	4	65,95,546,4798	https://www.mitomap.org/cgi-bin/print_ref_list?refs=65,95,546,4798&title=mtDNA+Locus+MT-OHR
+MT-CSB1	213	235	CR:CSB1	Conserved sequence block 1	2	65,91928	https://www.mitomap.org/cgi-bin/print_ref_list?refs=65,91928&title=mtDNA+Locus+MT-CSB1
+MT-TFX	233	260	CR:TFX	mtTF1 binding site	1	122	https://www.mitomap.org/cgi-bin/print_ref_list?refs=122&title=mtDNA+Locus+MT-TFX
+MT-TFY	276	303	CR:TFY	mtTF1 binding site	1	122	https://www.mitomap.org/cgi-bin/print_ref_list?refs=122&title=mtDNA+Locus+MT-TFY
+MT-CSB2	299	315	CR:CSB2	Conserved sequence block 2	3	65,90959,91928	https://www.mitomap.org/cgi-bin/print_ref_list?refs=65,90959,91928&title=mtDNA+Locus+MT-CSB2
+MT-HPR	317	321	CR:HPR	replication primer	2	61,62	https://www.mitomap.org/cgi-bin/print_ref_list?refs=61,62&title=mtDNA+Locus+MT-HPR
+MT-CSB3	346	363	CR:CSB3	Conserved sequence block 3	2	65,91928	https://www.mitomap.org/cgi-bin/print_ref_list?refs=65,91928&title=mtDNA+Locus+MT-CSB3
+MT-4H	371	379	CR:mt4H	mt4 H-strand control element	1	532	https://www.mitomap.org/cgi-bin/print_ref_list?refs=532&title=mtDNA+Locus+MT-4H
+MT-3H	384	391	CR:mt3H	mt3 H-strand control element	1	532	https://www.mitomap.org/cgi-bin/print_ref_list?refs=532&title=mtDNA+Locus+MT-3H
+MT-LSP	392	435	CR:PL	L-strand promoter [on complement]	5	64,81,176,325,579	https://www.mitomap.org/cgi-bin/print_ref_list?refs=64,81,176,325,579&title=mtDNA+Locus+MT-LSP
+MT-TFL	418	445	CR:mtTF1	mtTF1 binding site	1	122	https://www.mitomap.org/cgi-bin/print_ref_list?refs=122&title=mtDNA+Locus+MT-TFL
+MT-HV3	438	574	CR:HVS3	Hypervariable segment 3	2	3309,90590	https://www.mitomap.org/cgi-bin/print_ref_list?refs=3309,90590&title=mtDNA+Locus+MT-HV3
+MT-TFH	523	550	CR:TFH	mtTF1 binding site	1	122	https://www.mitomap.org/cgi-bin/print_ref_list?refs=122&title=mtDNA+Locus+MT-TFH
+MT-HSP1	545	567	CR:PH1	Major H-strand promoter	5	30,64,177,325,615	https://www.mitomap.org/cgi-bin/print_ref_list?refs=30,64,177,325,615&title=mtDNA+Locus+MT-HSP1
+MT-TF	577	647	F	tRNA phenylalanine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TF
+MT-HSP2	645	645	PH2	Minor H-strand promoter	3	325,326,615	https://www.mitomap.org/cgi-bin/print_ref_list?refs=325,326,615&title=mtDNA+Locus+MT-HSP2
+MT-RNR1	648	1601	12S	12S ribosomal RNA	2	2,4325	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,4325&title=mtDNA+Locus+MT-RNR1
+MT-MOTSc	1343	1393	MOTS-C	MOTS-C peptide (MRWQEMGYIFYPRKLR) [MDP]	6	9289,11669,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=9289,11669,11673,11710,11836,92919&title=mtDNA+Locus+MT-MOTSc
+MT-TV	1602	1670	V	tRNA valine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TV
+MT-RNR2	1671	3229	16S	16S ribosomal RNA	2	2,4326	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,4326&title=mtDNA+Locus+MT-RNR2
+MT-SHLP3	1703	1819	SHLP3	Small HN-like peptide 3 (MLGYNFSSFPCGTISIAPGFNFYRLYFIWVNGLAKVVW)  [MDP on complement]	6	11543,11669,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11543,11669,11673,11710,11836,92919&title=mtDNA+Locus+MT-SHLP3
+MT-SHLP2	2088	2168	SHLP2	Small HN-like peptide 2 (MGVKFFTLSTRFFPSVQRAVPLWTNS) [MDP on complement]	6	11543,11669,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11543,11669,11673,11710,11836,92919&title=mtDNA+Locus+MT-SHLP2
+MT-SHLP4	2442	2522	SHLP4	Small HN-like peptide 4 (MLEVMFLVNRRGKICRVPFTFFNLSL) [MDP on complement]	7	11541,11543,11669,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11541,11543,11669,11673,11710,11836,92919&title=mtDNA+Locus+MT-SHLP4
+MT-SHLP1	2485	2559	SHLP1	Small HN-like peptide 1 (MCHWAGGASNTGDARGDVFGKQAG) [MDP on complement]	6	11541,11669,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11541,11669,11673,11710,11836,92919&title=mtDNA+Locus+MT-SHLP1
+MT-HN	2633	2707	Humanin	Humanin peptide (MAPRGFSCLLLLTSEIDLPVKRRA) [MDP]	14	5106,9287,9870,10116,10117,11018,11540,11541,11543,11669,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=5106,9287,9870,10116,10117,11018,11540,11541,11543,11669,11673,11710,11836,92919&title=mtDNA+Locus+MT-HN
+MT-SHLP5	2780	2854	SHLP5	Small HN-like peptide 5 (MYCSEVGFCSEVAPTEIFNAGLVV) [MDP on complement]	7	11541,11543,11669,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11541,11543,11669,11673,11710,11836,92919&title=mtDNA+Locus+MT-SHLP5
+MT-SHLP6	2990	3052	SHLP6	Small HN-like peptide 6 (MLDQDIPMVQPLLKVRLFND)  [MDP]	8	11541,11543,11669,11672,11673,11710,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11541,11543,11669,11672,11673,11710,11836,92919&title=mtDNA+Locus+MT-SHLP6
+MT-RNR3	3206	3229	-	5S-like sequence	1	363	https://www.mitomap.org/cgi-bin/print_ref_list?refs=363&title=mtDNA+Locus+MT-RNR3
+MT-TER	3229	3256	-	Transcription terminator	4	75,76,267,5520	https://www.mitomap.org/cgi-bin/print_ref_list?refs=75,76,267,5520&title=mtDNA+Locus+MT-TER
+MT-TL1	3230	3304	L(UUA/G)	tRNA leucine 1	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TL1
+MT-NC1	3305	3306	NC1	non-coding nucleotides	0		
+MT-ND1	3307	4262	ND1	NADH Dehydrogenase subunit 1	3	2,72,114	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,72,114&title=mtDNA+Locus+MT-ND1
+MT-TI	4263	4331	I	tRNA isoleucine	4	2,540,90292,90605	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,540,90292,90605&title=mtDNA+Locus+MT-TI
+MT-TQ	4329	4400	Q	tRNA glutamine [on complement]	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TQ
+MT-NC2	4401	4401	NC2	non-coding nucleotides	0		
+MT-TM	4402	4469	M	tRNA methionine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TM
+MT-ND2	4470	5511	ND2	NADH dehydrogenase subunit 2	2	2,72	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,72&title=mtDNA+Locus+MT-ND2
+MT-TW	5512	5579	W	tRNA tryptophan	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TW
+MT-NC3	5580	5586	NC3	non-coding nucleotides	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-NC3
+MT-TA	5587	5655	A	tRNA alanine [on complement]	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TA
+MT-NC4	5656	5656	NC4	non-coding nucleotides	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-NC4
+MT-TN	5657	5729	N	tRNA asparagine [on complement]	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TN
+MT-OLR	5721	5798	OL	L-strand origin [on complement]	5	2,177,546,6564,91929	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,177,546,6564,91929&title=mtDNA+Locus+MT-OLR
+MT-TC	5761	5826	C	tRNA cysteine [on complement]	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TC
+MT-TY	5826	5891	Y	tRNA tyrosine [on complement]	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TY
+MT-NC5	5892	5903	NC5	non-coding nucleotides	0		
+MT-CO1	5904	7445	COI	Cytochrome c oxidase subunit I	2	2,2064	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,2064&title=mtDNA+Locus+MT-CO1
+MT-GAU	6287	6589	Gau	Mito derived protein (100AA) within MT-CO1 [MDP on complement]	2	11836,92837	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11836,92837&title=mtDNA+Locus+MT-GAU
+MT-TS1	7446	7514	S(UCN)	tRNA serine 1 [on complement]	2	2,2064	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,2064&title=mtDNA+Locus+MT-TS1
+MT-NC6	7515	7517	NC6	non-coding nucleotides	0		
+MT-TD	7518	7585	D	tRNA aspartic acid	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TD
+MT-CO2	7586	8269	COII	Cytochrome c oxidase subunit II	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-CO2
+MT-NC7	8270	8294	NC7	non-coding nucleotides	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-NC7
+MT-TK	8295	8364	K	tRNA lysine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TK
+MT-NC8	8365	8365	NC8	non-coding nucleotide	0		
+MT-ATP8	8366	8572	ATPase8	ATP synthase F0 subunit 8	2	2,294	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,294&title=mtDNA+Locus+MT-ATP8
+MT-ATP6	8527	9207	ATPase6	ATP synthase F0 subunit 6	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-ATP6
+MT-CO3	9207	9990	COIII	Cytochrome c oxidase subunit III	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-CO3
+MT-TG	9991	10058	G	tRNA glycine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TG
+MT-ND3	10059	10404	ND3	NADH dehydrogenase subunit 3	2	2,72	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,72&title=mtDNA+Locus+MT-ND3
+MT-TR	10405	10469	R	tRNA arginine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TR
+MT-ND4L	10470	10766	ND4L	NADH dehydrogenase subunit 4L	2	2,72	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,72&title=mtDNA+Locus+MT-ND4L
+MT-ND4	10760	12137	ND4	NADH dehydrogenase subunit 4	2	2,72	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,72&title=mtDNA+Locus+MT-ND4
+MT-ALTND4	11557	11856	ALTND4	Microprotein (99AA) within MT-ND4 [MDP]	3	11669,11836,92836	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11669,11836,92836&title=mtDNA+Locus+MT-ALTND4
+MT-TH	12138	12206	H	tRNA histidine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TH
+MT-TS2	12207	12265	S(AGY)	tRNA serine2	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TS2
+MT-SHMOOSE	12234	12410	SHMOOSE	Microprotein (58AA) overlapping MT-TS2, MT-TL1, MT-ND5  [MDP]	4	11450,11669,11836,92919	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11450,11669,11836,92919&title=mtDNA+Locus+MT-SHMOOSE
+MT-TL2	12266	12336	L(CUN)	tRNA leucine2	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TL2
+MT-ND5	12337	14148	ND5	NADH dehydrogenase subunit 5	2	2,72	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,72&title=mtDNA+Locus+MT-ND5
+MT-ND6	14149	14673	ND6	NADH dehydrogenase subunit 6 [on complement]	2	2,70	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,70&title=mtDNA+Locus+MT-ND6
+MT-TE	14674	14742	E	tRNA glutamic acid [on complement]	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TE
+MT-NC9	14743	14746	NC9	non-coding nucleotides	0		
+MT-CYB	14747	15887	Cytb	Cytochrome b	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-CYB
+MT-CYTB-187AA	14833	15396	CYTB-187AA	Protein (187AA) in alternate reading frame of MT-CYB [MDP]	4	11669,11674,11711,11836	https://www.mitomap.org/cgi-bin/print_ref_list?refs=11669,11674,11711,11836&title=mtDNA+Locus+MT-CYTB-187AA
+MT-TT	15888	15953	T	tRNA threonine	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TT
+MT-ATT	15925	499	ATT	membrane attachment site	2	1,2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=1,2&title=mtDNA+Locus+MT-ATT
+MT-NC10	15954	15955	NC10	non-coding nucleotides	0		
+MT-TP	15956	16023	P	tRNA proline [on complement]	1	2	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2&title=mtDNA+Locus+MT-TP
+MT-HV1	16024	16383	CR:HVS1/HV1	Hypervariable segment 1 [classic:16024-16365]	3	2,140,3056	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,140,3056&title=mtDNA+Locus+MT-HV1
+MT-CR	16024	576	CR:Control Region	entire Control Region (including displacement loop)	4	2,65,2043,2277	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,65,2043,2277&title=mtDNA+Locus+MT-CR
+MT-TAS2	16081	16138	CR:TAS2	extended termination-associated sequence	2	1922,4799	https://www.mitomap.org/cgi-bin/print_ref_list?refs=1922,4799&title=mtDNA+Locus+MT-TAS2
+MT-7SDNA	16106	191	CR:7S-like	7S DNA	6	2,95,9834,90580,90581,90582	https://www.mitomap.org/cgi-bin/print_ref_list?refs=2,95,9834,90580,90581,90582&title=mtDNA+Locus+MT-7SDNA
+MT-TAS	16157	16172	CR:TAS	termination-associated sequence	2	111,90822	https://www.mitomap.org/cgi-bin/print_ref_list?refs=111,90822&title=mtDNA+Locus+MT-TAS
+MT-5	16194	16208	CR:mt5	control element	1	374	https://www.mitomap.org/cgi-bin/print_ref_list?refs=374&title=mtDNA+Locus+MT-5
+MT-3L	16499	16506	CR:mt3L	L-strand control element [on complement]	1	532	https://www.mitomap.org/cgi-bin/print_ref_list?refs=532&title=mtDNA+Locus+MT-3L

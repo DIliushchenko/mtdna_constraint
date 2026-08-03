@@ -1,0 +1,15 @@
+{
+  "exporter": "scripts/export_mitomap_functional_loci_192.py",
+  "exporter_version": 1,
+  "parser_schema_version": 1,
+  "source_url": "https://www.mitomap.org/foswiki/bin/view/MITOMAP/GenomeLoci",
+  "source_revision": "r889",
+  "source_revision_date": "17 Jul 2026",
+  "source_last_edited": "Jul 13, 2026",
+  "genome_reference": "rCRS / NC_012920.1",
+  "genome_length": 16569,
+  "coordinate_convention": "1-based inclusive; circular intervals may have start > end",
+  "record_count": 87,
+  "tsv_file": "mitomap_genome_loci_192_r889.tsv",
+  "tsv_sha256": "7d396431a03109917a889b6a37f4d887f5cb1745e92fe9d15fb4f91b74dc8ed1"
+}

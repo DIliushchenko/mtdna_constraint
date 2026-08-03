@@ -1,0 +1,5 @@
+functional_class	n_mitomap_positions	n_analyzable_positions	n_reference_contexts	n_candidate_snvs
+control_region	1122	1122	64	3366
+other_non_coding	89	89	41	267
+protein_coding	11341	11341	64	34023
+rna_coding	4017	4014	64	12042
