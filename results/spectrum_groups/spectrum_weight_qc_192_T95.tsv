@@ -1,0 +1,8 @@
+metric	value
+n_variants	49698
+n_observed_gnomad	10440
+n_observed_helix	13409
+n_observed_combined	14501
+gnomad_total_records	56434
+helix_total_records	195983
+combined_db_total_records	252417
