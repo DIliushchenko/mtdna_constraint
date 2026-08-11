@@ -1,0 +1,5 @@
+cohort	n_variants	n_positions
+all_input_variants	49704	16568
+excluded_neutral_pathogenic_overlap	4	4
+clean_known_neutral	8280	4780
+clean_confirmed_pathogenic	84	80

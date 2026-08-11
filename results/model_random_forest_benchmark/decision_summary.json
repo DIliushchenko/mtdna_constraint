@@ -1,0 +1,54 @@
+{
+  "verdict": "random_forest_better_for_current_features_but_not_all_sensitivities",
+  "comparison_scope": "clean known-neutral versus confirmed-pathogenic variants",
+  "neutral_variants": 8280,
+  "pathogenic_variants": 84,
+  "excluded_label_overlaps": 4,
+  "outer_folds": 5,
+  "repeats": 5,
+  "split_group": "mtDNA position",
+  "threshold_rule": "95th percentile of inner-calibration neutral scores",
+  "feature_panels": {
+    "current_all_9": {
+      "random_forest_roc_auc": 0.9962416609155741,
+      "isolation_forest_roc_auc": 0.9725299056820795,
+      "roc_auc_difference_ci_lower": 0.011956287610836483,
+      "random_forest_average_precision": 0.7966496950460192,
+      "isolation_forest_average_precision": 0.4941793096680662,
+      "average_precision_difference_ci_lower": 0.19288367574660703,
+      "robust_random_forest_advantage": true
+    },
+    "without_phyloP": {
+      "random_forest_roc_auc": 0.9611211755233495,
+      "isolation_forest_roc_auc": 0.9466269841269841,
+      "roc_auc_difference_ci_lower": -0.001278986992498138,
+      "random_forest_average_precision": 0.284877810484515,
+      "isolation_forest_average_precision": 0.26470732030647287,
+      "average_precision_difference_ci_lower": -0.061717735698396205,
+      "robust_random_forest_advantage": false
+    },
+    "mlc_and_codon_only": {
+      "random_forest_roc_auc": 0.8631053025074763,
+      "isolation_forest_roc_auc": 0.9001337129054521,
+      "roc_auc_difference_ci_lower": -0.07476797438489051,
+      "random_forest_average_precision": 0.11885844801956241,
+      "isolation_forest_average_precision": 0.0971764402122879,
+      "average_precision_difference_ci_lower": -0.04394009563672116,
+      "robust_random_forest_advantage": false
+    },
+    "mlc_only": {
+      "random_forest_roc_auc": 0.7722610420979986,
+      "isolation_forest_roc_auc": 0.8976291120312859,
+      "roc_auc_difference_ci_lower": -0.17625744904471724,
+      "random_forest_average_precision": 0.04406841366973091,
+      "isolation_forest_average_precision": 0.06096909465142548,
+      "average_precision_difference_ci_lower": -0.03643414966274084,
+      "robust_random_forest_advantage": false
+    }
+  },
+  "panels_with_robust_random_forest_advantage": [
+    "current_all_9"
+  ],
+  "curation_circularity_warning": "The neutral reference includes variants selected for low phyloP and haplogroup status; all-nine performance can partly reconstruct label curation rather than independent biology.",
+  "important_limit": "Random Forest uses pathogenic labels during training; this benchmark does not establish validity for unlabeled variants or justify replacing the neutral-domain pipeline without external validation."
+}

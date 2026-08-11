@@ -1,0 +1,7 @@
+rf_cohort	n_variants	n_positions
+all_variants	49704	16568
+clean_confirmed_pathogenic	84	80
+clean_known_neutral	8280	4780
+disease_suspected_posthoc	56	56
+excluded_neutral_pathogenic_overlap	4	4
+unlabeled	41280	14896

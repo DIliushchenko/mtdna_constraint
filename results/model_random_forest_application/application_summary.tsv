@@ -1,0 +1,5 @@
+feature_panel	rf_cohort	n_variants	n_majority_pathogenic_like	n_high_consensus_pathogenic_like	n_uncertain	mean_call_fraction	median_call_fraction	mean_rf_score	majority_pathogenic_like_fraction	high_consensus_pathogenic_like_fraction
+current_all_9	disease_suspected_posthoc	56	32	29	7	0.5871428571428572	0.98	0.29477093	0.5714285714285714	0.5178571428571429
+current_all_9	unlabeled	41280	37083	35766	1938	0.8903362403100775	1.0	0.57335	0.898328488372093	0.8664244186046511
+without_phyloP	disease_suspected_posthoc	56	29	18	15	0.4571428571428572	0.54	0.17295274	0.5178571428571429	0.32142857142857145
+without_phyloP	unlabeled	41280	23611	18618	8868	0.546187984496124	0.64	0.24026361	0.5719718992248062	0.4510174418604651

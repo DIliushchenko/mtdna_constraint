@@ -1,0 +1,9 @@
+rf_cohort	rf_panel_call_agreement	n_variants
+disease_suspected_posthoc	all9_only_pathogenic_like	4
+disease_suspected_posthoc	both_pathogenic_like	28
+disease_suspected_posthoc	neither_pathogenic_like	23
+disease_suspected_posthoc	without_phyloP_only_pathogenic_like	1
+unlabeled	all9_only_pathogenic_like	13578
+unlabeled	both_pathogenic_like	23505
+unlabeled	neither_pathogenic_like	4091
+unlabeled	without_phyloP_only_pathogenic_like	106
