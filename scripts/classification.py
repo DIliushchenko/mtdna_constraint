@@ -635,6 +635,29 @@ def bootstrap_ci_by_position(
 # ---------------------------------------------------------------------------
 
 
+def feature_candidate_groups(
+    candidate_features: list[str], forced_features: list[str]
+) -> dict[str, list[str]]:
+    """Group the candidates so a categorical variable is never split apart.
+
+    Every one-hot column of the consequence class belongs to one group. Dropping
+    a subset of those columns would make the omitted levels share an encoding
+    with each other, which is a silent merge rather than a smaller model.
+    """
+    groups: dict[str, list[str]] = {}
+    consequence = [
+        f for f in candidate_features
+        if f.startswith("cons_") and f not in forced_features
+    ]
+    if consequence:
+        groups["consequence_class"] = consequence
+    for feature in candidate_features:
+        if feature in forced_features or feature in consequence:
+            continue
+        groups[feature] = [feature]
+    return groups
+
+
 def forward_feature_selection(
     estimator: Pipeline,
     data: pd.DataFrame,
@@ -648,13 +671,16 @@ def forward_feature_selection(
 ) -> pd.DataFrame:
     """Greedy forward selection with `forced_features` always present.
 
-    Returns one row per subset size with the mean and standard error of the
-    metric, which is what the one-standard-error parsimony rule consumes.
+    Candidates are groups of columns, not single columns, so the one-hot
+    encoding of a categorical variable enters or stays out whole. Returns one
+    row per subset size with the mean and standard error of the metric, which is
+    what the one-standard-error parsimony rule consumes.
     """
     y = data["target"].to_numpy()
     groups = data["position"].to_numpy()
     selected = list(forced_features)
-    remaining = [f for f in candidate_features if f not in forced_features]
+    candidate_groups = feature_candidate_groups(candidate_features, forced_features)
+    remaining = dict(candidate_groups)
     rows = []
 
     def evaluate(features: list[str]) -> tuple[float, float]:
@@ -678,18 +704,17 @@ def forward_feature_selection(
 
     while remaining:
         scored = []
-        for candidate in remaining:
-            trial_mean, trial_sem = evaluate(selected + [candidate])
-            scored.append((trial_mean, trial_sem, candidate))
+        for name, columns in remaining.items():
+            trial_mean, trial_sem = evaluate(selected + columns)
+            scored.append((trial_mean, trial_sem, name))
         scored.sort(reverse=True)
-        best_mean, best_sem, best_feature = scored[0]
-        selected.append(best_feature)
-        remaining.remove(best_feature)
+        best_mean, best_sem, best_name = scored[0]
+        selected.extend(remaining.pop(best_name))
         rows.append(
             {
                 "n_features": len(selected),
                 "features": ",".join(selected),
-                "added_feature": best_feature,
+                "added_feature": best_name,
                 f"{metric}_mean": best_mean,
                 f"{metric}_sem": best_sem,
             }

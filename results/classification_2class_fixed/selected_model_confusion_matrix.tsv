@@ -1,0 +1,3 @@
+	pred_benign	pred_pathogenic
+true_benign	8196	21
+true_pathogenic	15	76

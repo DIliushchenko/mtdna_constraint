@@ -1,0 +1,6 @@
+n_features	features	added_feature	macro_f1_mean	macro_f1_sem
+2	mlc_score,phyloP100way		0.667777941905447	0.011151106532897302
+3	mlc_score,phyloP100way,hom_rarity_soft	hom_rarity_soft	0.8735413324680856	0.011763352728443815
+8	mlc_score,phyloP100way,hom_rarity_soft,cons_missense,cons_synonymous,cons_truncating,cons_noncoding_rna,cons_intergenic	consequence_class	0.8988569990064578	0.01000796197013322
+9	mlc_score,phyloP100way,hom_rarity_soft,cons_missense,cons_synonymous,cons_truncating,cons_noncoding_rna,cons_intergenic,codon_pos2_any	codon_pos2_any	0.8954965118406779	0.010314744455065217
+10	mlc_score,phyloP100way,hom_rarity_soft,cons_missense,cons_synonymous,cons_truncating,cons_noncoding_rna,cons_intergenic,codon_pos2_any,codon_pos3_any	codon_pos3_any	0.8890893615127328	0.009994439974757683

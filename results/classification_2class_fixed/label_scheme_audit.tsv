@@ -1,0 +1,13 @@
+scheme	class	n_variants	n_positions	n_haplogroup_neutral	n_lowest_phylop_neutral	median_phyloP100way	median_mlc_score
+2class	benign	8217	4727	4244	3971	-8.10937	0.0
+2class	pathogenic	91	87	4	0	5.09937	0.53024
+2class	unlabeled_prediction_target	41396	14900	0	0	1.8219	0.49807
+3class	benign	8217	4727	4244	3971	-8.10937	0.0
+3class	vus	116	115	64	1	1.21865	0.30644499999999997
+3class	pathogenic	91	87	4	0	5.09937	0.53024
+3class	unlabeled_prediction_target	41280	14896	0	0	1.8219	0.49861
+4class	benign	8217	4727	4244	3971	-8.10937	0.0
+4class	vus_low	77	76	55	1	0.218937	0.30539
+4class	vus_high	39	39	9	0	3.56481	0.3075
+4class	pathogenic	91	87	4	0	5.09937	0.53024
+4class	unlabeled_prediction_target	41280	14896	0	0	1.8219	0.49861
