@@ -1,0 +1,5 @@
+group_name	n_candidates	n_unobserved	unobserved_weight_share	channels_with_candidates	channels_with_an_observed_variant
+benign	29164	17986	0.0028196577025397084	192	192
+vus_low	4777	3606	0.010891675994413081	190	143
+vus_high	3931	3306	0.09036193767248794	190	114
+pathogenic	11826	10299	0.03470199799866203	192	155

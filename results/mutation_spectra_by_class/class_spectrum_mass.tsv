@@ -1,0 +1,5 @@
+group_name	share_of_shared_spectrum	n_variants	observed_channels
+benign	0.902806309104644	29164	192
+vus_low	0.0453383072134001	4777	190
+vus_high	0.0052721675834770335	3931	190
+pathogenic	0.046583216098479	11826	192

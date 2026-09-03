@@ -1,61 +1,157 @@
 # mtdna_constraint
 
-## Isolation Forest characterization
+Constraint and mutational-spectrum analysis of human mitochondrial DNA, built on
+the Lake 2024 supplementary datasets, gnomAD and HelixMT population counts, and
+MITOMAP locus coordinates.
 
-[`notebooks/02b_characterize_isolation_forest.ipynb`](notebooks/02b_characterize_isolation_forest.ipynb)
-characterizes the final nine-feature Isolation Forest fitted in notebook 02.
-Because Isolation Forest has neither linear coefficients nor native feature
-weights, the notebook reports fixed-model permutation influence,
-leave-one-feature-out refits across three random seeds, full-model seed
-stability, feature correlations, and local neutral-replacement perturbations.
+## Pipeline
 
-Notebook 02 did not serialize its fitted forest, so 02b reconstructs the same
-pipeline from the saved feature table and records agreement with the saved
-scores in `results/model_characterization/model_reconstruction_qc.tsv`. All
-other characterization outputs are stored under
-`results/model_characterization/`, with figures under
-`results/figures/model_characterization/`. The primary side-by-side readout is
-`results/model_characterization/feature_influence_summary.tsv`; its ranks are
-diagnostic orderings, not fitted coefficients or causal effects.
+Notebooks run in order; each one reads what the previous ones wrote.
 
-## Random Forest benchmark
+| Notebook | Purpose |
+|---|---|
+| `00_build_master_table` | Assemble one row per possible mtDNA substitution from all sources |
+| `01_prepare_model_input` | Derive population summaries and the analysis-group column |
+| `02_fit_isolation_forest` | One-class outlier model; produces the T95 neutral-domain grouping the spectrum notebooks consume |
+| `02b_classify_variants` | Classification: label granularity, model and feature subset, with the one-class forest as a baseline |
+| `03`-`04` | Assign spectrum groups and attach population carrier weights (12- and 192-component variants) |
+| `05`-`06` | Compare mutational spectra overall and by MITOMAP functional class |
+| `05b_compare_spectra_by_class_192` | The same 192-component normalisation applied to the four predicted severity classes |
 
-[`notebooks/02c_compare_random_forest.ipynb`](notebooks/02c_compare_random_forest.ipynb)
-compares a supervised Random Forest with the current one-class Isolation Forest.
-The reusable calculation is in
-[`scripts/random_forest_benchmark.py`](scripts/random_forest_benchmark.py). It
-uses clean non-overlapping Dataset 8 neutral and Dataset 9 pathogenic labels,
-repeated five-fold cross-validation grouped by mtDNA position, inner neutral
-T95 calibration, and position-cluster bootstrap confidence intervals.
+Two reusable modules sit behind the classification branch:
+[`scripts/features.py`](scripts/features.py) builds the feature table and the
+label schemes, and [`scripts/classification.py`](scripts/classification.py)
+runs model selection, the baseline comparison and the application step.
 
-On the current nine features Random Forest performs better, but that advantage
-is not robust after removing `phyloP100way`. Because the neutral reference was
-partly selected using low phyloP and haplogroup criteria, this benchmark is kept
-as a sensitivity analysis rather than a replacement for the downstream
-neutral-domain grouping. Tables are stored in
-`results/model_random_forest_benchmark/` and figures in
-`results/figures/model_random_forest_benchmark/`.
+Large generated tables are not tracked in git; see `.gitignore`. Everything is
+regenerable from `data/raw/` by running the notebooks in order.
 
-## Random Forest application to unlabeled variants
+## Variant classification
 
-[`notebooks/02d_apply_random_forest_to_unlabeled.ipynb`](notebooks/02d_apply_random_forest_to_unlabeled.ipynb)
-applies repeated position-grouped Random Forest models to variants that were
-not used as strict neutral or pathogenic labels. The reusable calculation is
-in
-[`scripts/random_forest_application.py`](scripts/random_forest_application.py).
-Each of 25 models uses an independent neutral calibration subset for its own
-T95-like threshold. The notebook reports both the current nine-feature panel
-and a prespecified sensitivity panel without `phyloP100way`, held-out
-permutation importance, model-to-model call stability, and joint
-Isolation-Forest/Random-Forest classes.
+[`notebooks/02b_classify_variants.ipynb`](notebooks/02b_classify_variants.ipynb)
+decides three things: how many ordered severity classes are separable, which
+model should carry the classification of all 49,704 possible substitutions, and
+which features it needs. The reusable calculation is in
+[`scripts/classification.py`](scripts/classification.py); the feature table it
+consumes is built by [`scripts/features.py`](scripts/features.py) and written to
+`data/processed/model_features.tsv`.
 
-The RF output is treated as supervised pathogenic similarity rather than a
-clinical pathogenicity probability. On the current data, the all-feature RF
-calls 89.8% of unlabeled substitutions pathogenic-like and is strongly driven
-by phyloP; therefore it is retained as a second prioritization axis, not a
-replacement for the neutral-domain classification. Tables are stored in
-`results/model_random_forest_application/` and figures in
-`results/figures/model_random_forest_application/`.
+### Feature panel
+
+Six conceptual predictors, ten columns after one-hot encoding:
+
+| Feature | Source | Role |
+|---|---|---|
+| `mlc_score` | Lake 2024 dataset 7 | Local constraint, per substitution |
+| `phyloP100way` | UCSC, 100 vertebrates | Cross-species conservation, per position |
+| `hom_rarity_soft` | gnomAD and HelixMT | A single frequency signal: rarity in the homoplasmic state |
+| `cons_*` | VEP consequence | Effect class: missense, synonymous, truncating, non-coding RNA, intergenic |
+| `codon_pos2_any`, `codon_pos3_any` | Gene reading frame | Codon position |
+
+This replaces an earlier nine-feature panel that carried four separate frequency
+features. Their pairwise Spearman correlation reached 0.99, so they contributed
+roughly one and a half independent dimensions between them, and the full panel
+scored *worse* than a five-feature subset of it. The VEP consequence now enters
+directly rather than through codon position, which was only ever a proxy for it.
+
+### Two structural caveats, measured rather than assumed
+
+Both label criteria are partly reconstructible from the features. The dataset 8
+neutral reference was assembled from haplogroup-defining variants, which are
+common by construction, and from the lowest phyloP decile. A frequency feature
+therefore encodes the first criterion and phyloP the second. On a cohort holding
+only the haplogroup-selected neutrals, `hom_rarity_soft` alone separates benign
+from pathogenic at AUC 0.98 — a number that reflects the selection rule, not
+biology. Restricting the evaluation to that cohort removes the phyloP
+circularity but concentrates the frequency one, so neither cohort is clean and
+both are reported.
+
+Only `mlc_score` and `hom_rarity_soft` distinguish alternative alleles at one
+position; the rest are positional. For roughly six in ten unlabelled positions
+all three substitutions receive an identical feature vector, so the model ranks
+positions rather than alleles.
+
+### Isolation Forest baseline
+
+The one-class forest is kept as a baseline rather than dropped. It is refitted
+on the same features and scored on the same position-grouped folds as the
+supervised models, with its threshold calibrated on held-out benign rows exactly
+as the T95 rule of notebook 02 calibrates on held-out neutrals. Single features
+are scored on the same folds under the same rule, which is what makes the
+comparison informative: on the earlier nine-feature panel the forest reached
+85.7% recall on curated pathogenic variants at a 5.3% false-positive rate, while
+`phyloP100way` alone reached 78.6% and the frequency features alone reached
+zero. The forest is largely a phyloP detector, and its neutral reference mixes
+common haplogroup variants with never-observed low-conservation positions —
+two populations glued into one notion of "normal", which is why two thirds of
+unlabelled substitutions fall outside its domain.
+
+Tables are stored in `results/classification/` and figures in
+`results/figures/classification/`.
+
+The predicted `pathogenic` class means resemblance to the 91 curated pathogenic
+variants on these features, not clinical pathogenicity. `hom_rarity_soft` is 1
+for every substitution nobody has observed, which is seven in ten of them, so
+unobserved variants drift toward that class by construction.
+
+## Spectra of the predicted classes
+
+[`notebooks/05b_compare_spectra_by_class_192.ipynb`](notebooks/05b_compare_spectra_by_class_192.ipynb)
+applies the 192-component normalisation of notebook 05 to the four severity
+classes predicted in notebook 02b, instead of the two groups defined by the T95
+threshold. Strand orientation, opportunity counts, the shared denominator and
+the position bootstrap are unchanged; only the grouping column, the number of
+groups and the figures differ.
+
+The grouping does not come from the main classifier. A spectrum is weighted by
+population carrier counts, so a model that uses population frequency as a
+predictor would assign variants to groups partly by the quantity that later
+weights them, and the spectra would differ in part by construction. The T95
+grouping of notebook 05 has exactly this problem, since the Isolation Forest was
+fitted on four rarity features, but there it is unmeasured.
+
+[`scripts/spectrum_grouping.py`](scripts/spectrum_grouping.py) therefore refits
+the selected classifier on a frequency-free panel — local constraint,
+conservation, consequence class and codon position. Class membership is then
+independent of the weights. The cost is stated rather than hidden: macro F1
+falls from 0.53 to 0.41 and quadratic kappa from 0.71 to 0.39, and the share of
+substitutions called pathogenic-like falls from 50.2% to 23.8%, which is itself
+evidence that the frequency feature was inflating that class among never
+observed variants.
+
+`scripts/mutspec192_ci.py` now accepts more than two groups. The shared
+denominator spans every group passed, and differences are reported for all
+ordered pairs; with two groups the output is unchanged.
+
+### Why channels look absent
+
+No SBS192 channel is structurally impossible here: every one of the 64
+trinucleotides occurs in mtDNA between 54 and 624 times, and all 192 channels
+hold candidate substitutions. A channel looks empty for two other reasons.
+
+The first is observation. Most candidates have never been seen in a carrier —
+61.7% in the benign-like class, 87.1% in the pathogenic-like class — and enter
+only through the pseudocount `max(count, 1)`. Counting channels that hold at
+least one genuinely observed variant gives 192, 155, 143 and 114 for the
+benign-like, pathogenic-like, low-VUS and high-VUS classes. Those pseudocount
+variants carry 0.3% to 9.0% of a class's weight, so a channel built solely from
+them is near zero by construction rather than by biology. The per-class figures
+are audited in `channel_observation_audit.tsv`.
+
+The second is concentration inside a class rather than the choice of
+denominator. In the pathogenic-like class one variant carries 48% of the class
+weight and ten carry 89%, so on any axis the remaining channels are small. Each
+per-class figure is drawn on its own scale, so this is a property of the data,
+not of the plot.
+
+The denominator itself is shared across all four classes: the frequencies of all
+4 × 192 = 768 cells sum to one jointly, and each class keeps its share of the
+combined mass (0.9028, 0.0453, 0.0053 and 0.0466). That is what makes class
+totals comparable, and it is the normalisation used throughout.
+
+Tables are stored in `results/mutation_spectra_by_class/` and figures in
+`results/figures/mutation_spectra_by_class_192/`; figures named
+`spectrum_per_group_*` use the within-class normalisation.
 
 ## 192-component spectrum workflow
 
@@ -77,15 +173,51 @@ use one denominator shared across the analyzed model groups. Frequencies sum to
 one across groups and channels jointly, so each group's total retains its share
 of the combined spectrum weight.
 
-The 95% intervals in the 192-component notebooks use 4,000 paired bootstrap
-replicates of whole mtDNA positions. All alternate alleles, group assignments,
-and SBS192 contributions at a position are resampled together; the known rCRS
-context-opportunity table is kept fixed, and the opportunity correction plus
-shared denominator are reapplied in every replicate. The older conditional
-Poisson-count implementation remains available through
-`resampling_method="poisson_counts"` in `scripts/mutspec192_ci.py`, but it is
-not the primary figure because millions of aggregated carrier counts produce
-much narrower intervals with a different, count-conditional interpretation.
+The 90% intervals in the 192-component notebooks use 4,000 paired bootstrap
+replicates of whole mtDNA positions. **The resampling unit is the position, not
+the variant and not the carrier**: 16,566 analysable positions are drawn with
+replacement, and one draw is shared by every group and every SBS192 channel, so
+all alternate alleles and group assignments at a position travel together. The
+known rCRS context-opportunity table is kept fixed, and the opportunity
+correction plus the shared denominator are reapplied in every replicate.
+
+That choice explains the wide whiskers. A position is absent from a replicate
+with probability (1 - 1/16566)^16566 = 0.368, so any channel resting on one
+position vanishes in about 37% of replicates and its lower quantile sits at
+zero, while the replicates that draw it two or three times produce the long
+upper tail. Interval width therefore tracks how many positions hold a channel
+up, and nothing else:
+
+| Effective positions per channel | Median interval width, relative to the estimate |
+|---|---|
+| about 1 | 2.83 |
+| 1.5 to 3 | 2.21 |
+| 3 to 10 | 1.41 |
+| 10 to 50 | 0.82 |
+| over 50 | 0.53 |
+
+Every spectrum table therefore reports `n_positions`, `top_position_share` and
+`n_effective_positions`, the inverse Simpson count `1 / sum(share^2)`. Raw
+position counts mislead on their own: the largest pathogenic-like channel
+`T[A>G]A` draws on 70 positions but its top position carries 99.3% of the
+weight, so its effective count is 1.01 and it behaves as a single-position
+channel. The other 69 positions contribute only pseudocounts.
+
+`scripts/mutspec192_ci.py` implements exactly one resampling scheme and one
+denominator, with no alternative to choose between, and reports it the way
+PyMutSpec expects. That library computes no intervals of its own —
+`plot_mutspec192` only renders precomputed columns — so the scheme is stated
+here rather than inherited, while the presentation follows it exactly: the bar
+is the point estimate, the grey marker and the whisker sit on the resampling
+median, and the interval runs from the 5th to the 95th percentile, hence 90%
+rather than 95%. Every spectrum table also carries `MutSpec`, `MutSpec_median`,
+`MutSpec_q05` and `MutSpec_q95` aliases, so it can be passed straight to
+`plot_mutspec192`. A visible gap between the top of a bar and its grey marker
+means the resampling distribution is skewed away from the point estimate, which
+happens where a channel rests on very few positions. The earlier conditional Poisson-count alternative has been removed:
+aggregated carrier counts in the millions produced much narrower intervals under
+a different, count-conditional interpretation, and keeping two schemes invited
+comparing figures that were not comparable.
 
 Before opportunity normalization and plotting in notebooks 05 and 06, the 1076
 positions in canonical MITOMAP loci marked `[on complement]` are oriented to

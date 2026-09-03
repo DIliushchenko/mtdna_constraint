@@ -16,6 +16,7 @@ available as a sensitivity analysis.
 from __future__ import annotations
 
 from math import erfc, sqrt
+from itertools import combinations
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -120,6 +121,7 @@ def _iter_strata(
         yield tuple(key), stratum
 
 
+
 def estimate_shared_spectrum_uncertainty(
     data: pd.DataFrame,
     *,
@@ -131,39 +133,39 @@ def estimate_shared_spectrum_uncertainty(
     opportunity_col: str = "ref_context_count",
     position_col: str = "position",
     strata_cols: Sequence[str] = (),
-    resampling_method: str = "position_bootstrap",
     n_simulations: int = 4000,
-    confidence_level: float = 0.95,
+    confidence_level: float = 0.90,
     random_seed: int = 20260810,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Estimate spectra and between-group differences by resampling.
 
-    The first two values in ``group_order`` define the reported difference as
-    ``group_order[1] - group_order[0]``. Benjamini-Hochberg correction is
-    performed separately inside every stratum across all SBS192 channels.
+    Every ordered pair in ``group_order`` is reported as
+    ``comparison_group - reference_group``; with two groups that is the single
+    difference ``group_order[1] - group_order[0]``. The denominator is shared
+    across all groups in ``group_order``, so passing four groups renormalises
+    the spectra over four rather than comparing two at a time.
+    Benjamini-Hochberg correction is performed separately inside every stratum
+    and every pair, across all SBS192 channels.
 
-    ``position_bootstrap`` is the default: positions are sampled with
-    replacement and the same draw is used for both groups and all channels.
-    ``poisson_counts`` reproduces the earlier conditional model that applies
-    independent Poisson noise to aggregated adjusted carrier counts.
+    Positions are the resampling unit: whole mtDNA positions are drawn with
+    replacement, and one draw is shared by every group and every channel, so
+    variants at the same position travel together. The denominator is shared
+    across all groups, so the frequencies sum to one jointly and each group
+    keeps its share of the combined mass.
     """
-    if len(group_order) != 2:
-        raise ValueError("Exactly two groups are required for paired comparison.")
+    if len(group_order) < 2:
+        raise ValueError("At least two groups are required for a comparison.")
+    if len(set(group_order)) != len(group_order):
+        raise ValueError("group_order must not repeat a group.")
     if n_simulations < 200:
         raise ValueError("Use at least 200 simulations for stable intervals.")
     if not 0.0 < confidence_level < 1.0:
         raise ValueError("confidence_level must be between zero and one.")
-    if resampling_method not in {"position_bootstrap", "poisson_counts"}:
-        raise ValueError(
-            "resampling_method must be 'position_bootstrap' or "
-            "'poisson_counts'."
-        )
 
     required = {
         group_col, category_col, count_col, opportunity_col, *strata_cols,
     }
-    if resampling_method == "position_bootstrap":
-        required.add(position_col)
+    required.add(position_col)
     missing = sorted(required.difference(data.columns))
     if missing:
         raise ValueError(f"Missing uncertainty columns: {missing}")
@@ -236,66 +238,65 @@ def estimate_shared_spectrum_uncertainty(
         cell_scale = np.tile(category_scale, len(group_order))
 
         point_weight = cell_lambda * cell_scale
-        point_total = point_weight.sum()
-        if point_total <= 0:
+        if point_weight.sum() <= 0:
             raise ValueError(f"Non-positive shared spectrum total for {stratum_key}.")
-        point_frequency = point_weight / point_total
+        point_frequency = point_weight / point_weight.sum()
 
         simulations = np.empty((n_simulations, n_cells), dtype=float)
-        if resampling_method == "poisson_counts":
-            n_bootstrap_units = np.nan
-            batch_size = min(500, n_simulations)
-            for start in range(0, n_simulations, batch_size):
-                stop = min(start + batch_size, n_simulations)
-                sampled_count = rng.poisson(
-                    cell_lambda,
-                    size=(stop - start, n_cells),
-                )
-                sampled_weight = sampled_count * cell_scale
-                sampled_total = sampled_weight.sum(axis=1)
-                if np.any(sampled_total <= 0):
-                    raise ValueError("A bootstrap replicate has zero total weight.")
-                simulations[start:stop] = (
-                    sampled_weight / sampled_total[:, None]
-                )
-        else:
-            if stratum[position_col].isna().any():
-                raise ValueError(f"{position_col!r} contains missing values.")
-            position_codes, positions = pd.factorize(
-                stratum[position_col], sort=True
+        if stratum[position_col].isna().any():
+            raise ValueError(f"{position_col!r} contains missing values.")
+        position_codes, positions = pd.factorize(
+            stratum[position_col], sort=True
+        )
+        n_bootstrap_units = int(len(positions))
+        if n_bootstrap_units < 2:
+            raise ValueError(
+                "Position bootstrap requires at least two unique positions."
             )
-            n_bootstrap_units = int(len(positions))
-            if n_bootstrap_units < 2:
-                raise ValueError(
-                    "Position bootstrap requires at least two unique positions."
-                )
-            position_contribution = np.zeros(
-                (n_bootstrap_units, n_cells), dtype=float
-            )
-            np.add.at(
+        position_contribution = np.zeros(
+            (n_bootstrap_units, n_cells), dtype=float
+        )
+        np.add.at(
+            position_contribution,
+            (position_codes, cell_index),
+            stratum[count_col].to_numpy(float),
+        )
+        # How concentrated each cell is over positions. Positions are the
+        # resampling unit, so this, and not the carrier count, sets the width of
+        # the interval.
+        cell_position_total = position_contribution.sum(axis=0)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            position_share = np.divide(
                 position_contribution,
-                (position_codes, cell_index),
-                stratum[count_col].to_numpy(float),
+                cell_position_total[None, :],
+                out=np.zeros_like(position_contribution),
+                where=cell_position_total[None, :] > 0,
             )
-            probabilities = np.full(
-                n_bootstrap_units, 1.0 / n_bootstrap_units
+        simpson = (position_share ** 2).sum(axis=0)
+        n_effective_positions = np.divide(
+            1.0, simpson, out=np.zeros_like(simpson), where=simpson > 0
+        )
+        top_position_share = position_share.max(axis=0)
+        n_positions_present = (position_contribution > 0).sum(axis=0)
+
+        probabilities = np.full(
+            n_bootstrap_units, 1.0 / n_bootstrap_units
+        )
+        batch_size = min(50, n_simulations)
+        for start in range(0, n_simulations, batch_size):
+            stop = min(start + batch_size, n_simulations)
+            multiplicity = rng.multinomial(
+                n_bootstrap_units,
+                probabilities,
+                size=stop - start,
             )
-            batch_size = min(50, n_simulations)
-            for start in range(0, n_simulations, batch_size):
-                stop = min(start + batch_size, n_simulations)
-                multiplicity = rng.multinomial(
-                    n_bootstrap_units,
-                    probabilities,
-                    size=stop - start,
-                )
-                sampled_count = multiplicity @ position_contribution
-                sampled_weight = sampled_count * cell_scale
-                sampled_total = sampled_weight.sum(axis=1)
-                if np.any(sampled_total <= 0):
-                    raise ValueError("A bootstrap replicate has zero total weight.")
-                simulations[start:stop] = (
-                    sampled_weight / sampled_total[:, None]
-                )
+            sampled_count = multiplicity @ position_contribution
+            sampled_weight = sampled_count * cell_scale
+            if np.any(sampled_weight.sum(axis=1) <= 0):
+                raise ValueError("A bootstrap replicate has zero total weight.")
+            simulations[start:stop] = (
+                sampled_weight / sampled_weight.sum(axis=1)[:, None]
+            )
 
         q_low, q_median, q_high = np.quantile(
             simulations, quantiles, axis=0
@@ -312,29 +313,45 @@ def estimate_shared_spectrum_uncertainty(
             "ci_upper": q_high,
             "n_bootstrap_units": n_bootstrap_units,
         })
+        # Aliases under the PyMutSpec names, so a spectrum table can be handed
+        # straight to plot_mutspec192. The quantiles are the ones that library
+        # expects: q05 and q95 at the default confidence level of 0.90.
+        spectrum_part["n_positions"] = n_positions_present
+        spectrum_part["n_effective_positions"] = n_effective_positions
+        spectrum_part["top_position_share"] = top_position_share
+        spectrum_part["MutSpec"] = spectrum_part["weighted_frequency"]
+        spectrum_part["MutSpec_median"] = spectrum_part["bootstrap_median"]
+        spectrum_part["MutSpec_q05"] = spectrum_part["ci_lower"]
+        spectrum_part["MutSpec_q95"] = spectrum_part["ci_upper"]
         for column, value in stratum_values.items():
             spectrum_part.insert(0, column, value)
         spectrum_parts.append(spectrum_part)
 
-        reference_slice = slice(0, n_categories)
-        comparison_slice = slice(n_categories, 2 * n_categories)
-        point_difference = (
-            point_frequency[comparison_slice] - point_frequency[reference_slice]
-        )
-        simulated_difference = (
-            simulations[:, comparison_slice] - simulations[:, reference_slice]
-        )
-        diff_low, diff_median, diff_high = np.quantile(
-            simulated_difference, quantiles, axis=0
-        )
-        diff_se = simulated_difference.std(axis=0, ddof=1)
-        z_score = np.divide(
-            point_difference,
-            diff_se,
-            out=np.zeros_like(point_difference),
-            where=diff_se > 0,
-        )
-        if resampling_method == "position_bootstrap":
+        for reference_index, comparison_index in combinations(
+            range(len(group_order)), 2
+        ):
+            reference_slice = slice(
+                reference_index * n_categories, (reference_index + 1) * n_categories
+            )
+            comparison_slice = slice(
+                comparison_index * n_categories, (comparison_index + 1) * n_categories
+            )
+            point_difference = (
+                point_frequency[comparison_slice] - point_frequency[reference_slice]
+            )
+            simulated_difference = (
+                simulations[:, comparison_slice] - simulations[:, reference_slice]
+            )
+            diff_low, diff_median, diff_high = np.quantile(
+                simulated_difference, quantiles, axis=0
+            )
+            diff_se = simulated_difference.std(axis=0, ddof=1)
+            z_score = np.divide(
+                point_difference,
+                diff_se,
+                out=np.zeros_like(point_difference),
+                where=diff_se > 0,
+            )
             centered_difference = simulated_difference - point_difference
             p_value = (
                 1
@@ -345,53 +362,40 @@ def estimate_shared_spectrum_uncertainty(
                 )
             ) / (n_simulations + 1)
             p_value_method = "centered_position_bootstrap"
-        else:
-            p_value = _normal_two_sided_p(z_score)
-            zero_se_nonzero_difference = (
-                (diff_se == 0) & (point_difference != 0)
-            )
-            p_value[zero_se_nonzero_difference] = 0.0
-            p_value_method = "normal_approximation_from_poisson_bootstrap"
-        q_value = _benjamini_hochberg(p_value)
-        ci_excludes_zero = (diff_low > 0) | (diff_high < 0)
+            q_value = _benjamini_hochberg(p_value)
+            ci_excludes_zero = (diff_low > 0) | (diff_high < 0)
 
-        difference_part = pd.DataFrame({
-            "reference_group": group_order[0],
-            "comparison_group": group_order[1],
-            category_col: category_order,
-            "frequency_difference": point_difference,
-            "bootstrap_median_difference": diff_median,
-            "ci_lower": diff_low,
-            "ci_upper": diff_high,
-            "bootstrap_se": diff_se,
-            "z_score": z_score,
-            "p_value": p_value,
-            "p_value_method": p_value_method,
-            "q_value_bh": q_value,
-            "ci_excludes_zero": ci_excludes_zero,
-            "significant_fdr_05": ci_excludes_zero & (q_value < 0.05),
-            "n_bootstrap_units": n_bootstrap_units,
-        })
-        for column, value in stratum_values.items():
-            difference_part.insert(0, column, value)
-        difference_parts.append(difference_part)
+            difference_part = pd.DataFrame({
+                "reference_group": group_order[reference_index],
+                "comparison_group": group_order[comparison_index],
+                category_col: category_order,
+                "frequency_difference": point_difference,
+                "bootstrap_median_difference": diff_median,
+                "ci_lower": diff_low,
+                "ci_upper": diff_high,
+                "bootstrap_se": diff_se,
+                "z_score": z_score,
+                "p_value": p_value,
+                "p_value_method": p_value_method,
+                "q_value_bh": q_value,
+                "ci_excludes_zero": ci_excludes_zero,
+                "significant_fdr_05": ci_excludes_zero & (q_value < 0.05),
+                "n_bootstrap_units": n_bootstrap_units,
+            })
+            for column, value in stratum_values.items():
+                difference_part.insert(0, column, value)
+            difference_parts.append(difference_part)
 
     spectrum_result = pd.concat(spectrum_parts, ignore_index=True)
     difference_result = pd.concat(difference_parts, ignore_index=True)
     for result in (spectrum_result, difference_result):
         result["confidence_level"] = confidence_level
         result["n_simulations"] = n_simulations
-        result["resampling_method"] = resampling_method
-        result["bootstrap_unit"] = (
-            "mtDNA_position"
-            if resampling_method == "position_bootstrap"
-            else "aggregated_adjusted_carrier_count"
-        )
+        result["resampling_method"] = "position_bootstrap"
+        result["bootstrap_unit"] = "mtDNA_position"
         result["opportunities_resampled"] = False
         result["uncertainty_model"] = (
             "paired nonparametric bootstrap of whole mtDNA positions"
-            if resampling_method == "position_bootstrap"
-            else "conditional Poisson bootstrap of floor-of-one counts"
         )
     return spectrum_result, difference_result
 
@@ -561,6 +565,7 @@ def plot_mutspec192_with_ci(
             colors = [_dark_color(value) for value in base_colors]
 
         y = plot_df["weighted_frequency"].to_numpy(float)
+        median = plot_df["bootstrap_median"].to_numpy(float)
         lower = plot_df["ci_lower"].to_numpy(float)
         upper = plot_df["ci_upper"].to_numpy(float)
         all_upper.append(upper)
@@ -573,15 +578,20 @@ def plot_mutspec192_with_ci(
             edgecolor="none",
             zorder=2,
         )
+        # PyMutSpec convention: the bar is the point estimate, the marker and the
+        # interval sit on the resampling median, and the interval is measured
+        # from that median rather than from the bar.
         ax.errorbar(
             x,
-            y,
-            yerr=np.vstack([np.maximum(y - lower, 0), np.maximum(upper - y, 0)]),
-            fmt="none",
-            ecolor="#4a4a4a",
-            elinewidth=0.8,
-            capsize=1.5,
-            capthick=0.8,
+            median,
+            yerr=np.vstack(
+                [np.maximum(median - lower, 0), np.maximum(upper - median, 0)]
+            ),
+            fmt=".",
+            color="gray",
+            markersize=2.0,
+            elinewidth=0.7,
+            capsize=2,
             zorder=3,
         )
 
@@ -685,7 +695,8 @@ def plot_mutspec192_difference_with_ci(
         .reset_index()
     )
     required = {
-        "frequency_difference", "ci_lower", "ci_upper", "significant_fdr_05",
+        "frequency_difference", "bootstrap_median_difference",
+        "ci_lower", "ci_upper", "significant_fdr_05",
     }
     missing = sorted(required.difference(plot_df.columns))
     if missing or plot_df[list(required - {"significant_fdr_05"})].isna().any().any():
@@ -707,15 +718,18 @@ def plot_mutspec192_difference_with_ci(
     )
 
     ax.bar(positions, y, width=0.62, color=colors, edgecolor="none", zorder=2)
+    median = plot_df["bootstrap_median_difference"].to_numpy(float)
     ax.errorbar(
         positions,
-        y,
-        yerr=np.vstack([np.maximum(y - lower, 0), np.maximum(upper - y, 0)]),
-        fmt="none",
-        ecolor="#4a4a4a",
-        elinewidth=0.8,
-        capsize=1.5,
-        capthick=0.8,
+        median,
+        yerr=np.vstack(
+            [np.maximum(median - lower, 0), np.maximum(upper - median, 0)]
+        ),
+        fmt=".",
+        color="gray",
+        markersize=2.0,
+        elinewidth=0.7,
+        capsize=2,
         zorder=3,
     )
     ax.axhline(0.0, color="black", linewidth=0.8, zorder=1)

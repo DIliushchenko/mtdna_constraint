@@ -1,0 +1,176 @@
+{
+  "input": "C:\\Users\\Dili\\PhD\\Projects\\mtdna_constraint\\data\\processed\\model_features.tsv",
+  "budget": "thorough",
+  "selected_model": "random_forest",
+  "selected_scheme": "4class",
+  "scheme_choice": {
+    "scheme": "4class",
+    "reason": "most detailed scheme with every class above chance and at most 5% relative loss of shared MCC",
+    "tolerance": 0.05,
+    "shared_mcc": 0.8090727726833309,
+    "shared_mcc_relative_drop": 0.0,
+    "rejected": [
+      "2class",
+      "3class"
+    ]
+  },
+  "selected_classes": [
+    "benign",
+    "vus_low",
+    "vus_high",
+    "pathogenic"
+  ],
+  "selected_features": [
+    "mlc_score",
+    "phyloP100way",
+    "hom_rarity_soft",
+    "cons_missense",
+    "codon_pos2_any",
+    "cons_noncoding_rna"
+  ],
+  "final_hyperparameters": {
+    "model__n_estimators": "300",
+    "model__min_samples_leaf": "4",
+    "model__max_features": "sqrt",
+    "model__max_depth": "12"
+  },
+  "feature_selection": {
+    "best_n_features": 8,
+    "best_score": 0.518306011872081,
+    "one_se_threshold": 0.5108467726509356,
+    "chosen_n_features": 6,
+    "chosen_score": 0.5167277793427232,
+    "chosen_features": [
+      "mlc_score",
+      "phyloP100way",
+      "hom_rarity_soft",
+      "cons_missense",
+      "codon_pos2_any",
+      "cons_noncoding_rna"
+    ]
+  },
+  "confidence_threshold": {
+    "threshold": 0.45,
+    "coverage": 0.988960113960114,
+    "macro_f1": 0.553093159965534
+  },
+  "overall_mean_rank": {
+    "random_forest": 2.4466666666666668,
+    "extra_trees": 2.5,
+    "hist_gradient_boosting": 2.9133333333333336,
+    "ordinal_forest": 3.0533333333333332,
+    "k_nearest_neighbors": 4.493333333333333,
+    "svm_rbf": 6.260000000000001,
+    "logistic_regression": 6.333333333333333
+  },
+  "critical_difference": {
+    "2class": {
+      "available": true,
+      "n_folds": 25,
+      "n_models": 8,
+      "friedman_statistic": 130.90979257115293,
+      "friedman_p_value": 4.057198421401053e-25,
+      "critical_difference": 2.099938399096507,
+      "mean_ranks": {
+        "extra_trees": 2.54,
+        "hist_gradient_boosting": 2.9,
+        "k_nearest_neighbors": 3.08,
+        "ordinal_forest": 3.32,
+        "random_forest": 3.42,
+        "svm_rbf": 5.74,
+        "logistic_regression": 7.0,
+        "prior_baseline": 8.0
+      }
+    },
+    "3class": {
+      "available": true,
+      "n_folds": 25,
+      "n_models": 8,
+      "friedman_statistic": 148.16000000000008,
+      "friedman_p_value": 9.881987517180586e-29,
+      "critical_difference": 2.099938399096507,
+      "mean_ranks": {
+        "random_forest": 1.92,
+        "ordinal_forest": 2.52,
+        "extra_trees": 2.8,
+        "hist_gradient_boosting": 2.96,
+        "k_nearest_neighbors": 5.0,
+        "logistic_regression": 6.4,
+        "svm_rbf": 6.4,
+        "prior_baseline": 8.0
+      }
+    },
+    "4class": {
+      "available": true,
+      "n_folds": 25,
+      "n_models": 8,
+      "friedman_statistic": 144.13333333333344,
+      "friedman_p_value": 6.913843702857518e-28,
+      "critical_difference": 2.099938399096507,
+      "mean_ranks": {
+        "random_forest": 2.0,
+        "extra_trees": 2.16,
+        "hist_gradient_boosting": 2.88,
+        "ordinal_forest": 3.32,
+        "k_nearest_neighbors": 5.4,
+        "logistic_regression": 5.6,
+        "svm_rbf": 6.64,
+        "prior_baseline": 8.0
+      }
+    }
+  },
+  "bootstrap_ci": [
+    {
+      "metric": "macro_f1",
+      "point_estimate": 0.5296654951761874,
+      "ci_lower": 0.49050394550689935,
+      "ci_upper": 0.5699775649873144,
+      "n_bootstrap": 2000
+    },
+    {
+      "metric": "balanced_accuracy",
+      "point_estimate": 0.5609862025524677,
+      "ci_lower": 0.5158925962865356,
+      "ci_upper": 0.6072586753114284,
+      "n_bootstrap": 2000
+    },
+    {
+      "metric": "mcc",
+      "point_estimate": 0.4697422750556627,
+      "ci_lower": 0.4154715592280811,
+      "ci_upper": 0.520961392946363,
+      "n_bootstrap": 2000
+    },
+    {
+      "metric": "quadratic_kappa",
+      "point_estimate": 0.7075751491009047,
+      "ci_lower": 0.650275246232366,
+      "ci_upper": 0.7597591520182898,
+      "n_bootstrap": 2000
+    }
+  ],
+  "n_labelled": 8424,
+  "n_unlabelled": 41280,
+  "unlabelled_call_shares": {
+    "pathogenic": 0.5023498062015503,
+    "benign": 0.29110949612403103,
+    "uncertain": 0.12814922480620156,
+    "vus_high": 0.07369186046511628,
+    "vus_low": 0.0046996124031007756
+  },
+  "isolation_forest_baseline": {
+    "supervised model": 0.9882568514654799,
+    "single: phyloP100way": 0.9540554976365938,
+    "isolation_forest": 0.9530684724236677,
+    "single: mlc_score": 0.9029743980608649,
+    "single: hom_rarity_soft": 0.8001655408560209,
+    "single: cons_noncoding_rna": 0.7092335163678181,
+    "single: codon_pos2_any": 0.6660503834303688,
+    "single: cons_missense": 0.6418682787580051
+  },
+  "nested_cv_macro_f1": {
+    "extra_trees": 0.5008894571015239,
+    "hist_gradient_boosting": 0.4879600644375718,
+    "random_forest": 0.5082074666066111
+  }
+}

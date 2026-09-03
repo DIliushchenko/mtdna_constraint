@@ -27,3 +27,29 @@ env/
 *.log
 tmp/
 temp/
+
+# ---------------------------------------------------------------------------
+# Generated per-variant tables
+#
+# These hold one row per mtDNA substitution (about 50k rows) and run to tens of
+# megabytes each. They are regenerable from the tracked raw data by re-running
+# the notebooks in order, so only the summaries, metrics and figures derived
+# from them are versioned.
+# ---------------------------------------------------------------------------
+
+# Notebook 00 and 01: master table and model input
+data/processed/master_snv_table.tsv
+data/processed/model_input/neutral_scoring_input.tsv
+data/processed/model_input/label_audit.tsv
+
+# Notebook 02: Isolation Forest scores per threshold
+results/model/isolation_forest_scores_*.tsv
+
+# Notebook 02b: multiclass predictions and out-of-fold probabilities
+results/model_multiclass_selection/all_substitution_predictions.tsv
+results/model_multiclass_selection/selected_model_oof_predictions.tsv
+
+# Notebooks 03 and 04: spectrum group assignments and carrier weights
+results/spectrum_groups/spectrum_groups_T95.tsv
+results/spectrum_groups/spectrum_groups_192_T95.tsv
+results/spectrum_groups/spectrum_groups_with_weights_*.tsv

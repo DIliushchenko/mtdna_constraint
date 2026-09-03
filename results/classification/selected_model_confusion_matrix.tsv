@@ -1,0 +1,5 @@
+	pred_benign	pred_vus_low	pred_vus_high	pred_pathogenic
+true_benign	8079	87	27	24
+true_vus_low	56	15	4	2
+true_vus_high	16	4	9	10
+true_pathogenic	12	0	3	76

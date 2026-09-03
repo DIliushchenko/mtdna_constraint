@@ -1,2 +1,0 @@
-sklearn_version	n_variants	n_neutral_train	n_neutral_validation	saved_t95_threshold	reconstructed_t95_threshold	max_absolute_score_difference	mean_absolute_score_difference	score_spearman	t95_classification_agreement	t95_classification_flip_fraction	above_t95_jaccard
-1.8.0	49704	6213	2071	0.0980458543384974	0.09819958145422714	0.018378252214504287	0.003812749499801934	0.9983538618473544	0.988914373088685	0.011085626911314983	0.9807126855222627

@@ -1,0 +1,7 @@
+reference_group	comparison_group	n_significant_channels
+benign	pathogenic	68
+benign	vus_high	95
+benign	vus_low	70
+vus_high	pathogenic	100
+vus_low	pathogenic	81
+vus_low	vus_high	4
